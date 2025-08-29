@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laptops - Tienda FourTech</title>
+    <link rel="icon" href="img/logo.jpeg" type="image/png" />
+    
+    <!-- Link de Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+      crossorigin="anonymous"
+    />
+    <!-- Animate.css para animaciones -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <span class="ir-arriba">
+      <i class="fa-solid fa-arrow-up"></i>
+    </span>
+    
+    <header
+      class="d-flex p-2 text-center py-4 justify-content-around align-items-center"
+    >
+        <div class="logo">
+          <img src="img/logo.jpeg" alt="Logo FourTech" />
+        </div>
+        <div class="slogan">
+          <h1>Tienda Fourtech</h1>
+          <p>Tenemos lo necesario para ti.</p>
+        </div>
+
+        <!-- Sección de autenticación -->
+        <div class="header-actions">
+          <!-- Botones cuando NO está autenticado -->
+          <div sec:authorize="!isAuthenticated()" class="auth-section">
+            <a href="/login" class="btn btn-outline-primary me-2">
+              <i class="fas fa-sign-in-alt"></i>
+              Iniciar Sesión
+            </a>
+            <a href="/registro" class="btn btn-primary">
+              <i class="fas fa-user-plus"></i>
+              Registrarse
+            </a>
+          </div>
+
+          <!-- Menú cuando SÍ está autenticado -->
+          <div sec:authorize="isAuthenticated()" class="user-section">
+            <div class="user-menu d-flex align-items-center">
+              <span class="welcome-text me-3">
+                <i class="fas fa-user-circle me-1"></i>
+                Bienvenido, <strong sec:authentication="name">Usuario</strong>
+              </span>
+              <form th:action="@{/logout}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-outline-danger">
+                  <i class="fas fa-sign-out-alt"></i>
+                  Cerrar Sesión
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+    </header>
+
+    <nav
+      class="navbar navbar-expand-lg bg-dark border-bottom border-body"
+      data-bs-theme="dark"
+    >
+      <div class="container-fluid justify-content-end">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo01"
+          aria-controls="navbarTogglerDemo01"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          class="collapse navbar-collapse justify-content-center text-center"
+          id="navbarTogglerDemo01"
+        >
+          <ul class="navbar-nav mb-2 mb-lg-0 gap-5">
+          <li class="nav-item">
+            <a href="/" class="nav-link">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a href="/computadoras" class="nav-link">Computadoras</a>
+          </li>
+          <li class="nav-item">
+            <a href="/laptops" class="nav-link active">Laptops</a>
+          </li>
+          <li class="nav-item">
+            <a href="/accesorios" class="nav-link">Accesorios</a>
+          </li>
+          <li class="nav-item">
+            <a href="/usuarios" class="nav-link">Usuarios</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="container">
+        <!-- Page Header -->
+        <div class="section-header animate__animated animate__fadeInUp">
+          <div class="section-title">
+          <h1>Laptops</h1>
+          <p>Las mejores laptops para trabajo, gaming y estudios</p>
+        </div>
+    </div>
+
+      <section class="product-grid">
+        <div th:each="producto : ${productos}" class="product-card animate-on-scroll">
+          <img th:src="${producto.foto}" th:alt="${producto.producto}" loading="lazy">
+          <div class="product-info">
+            <h3 th:text="${producto.producto}">Nombre del Producto</h3>
+            <div class="product-specs">
+              <i class="fas fa-laptop me-2"></i>Laptop de alto rendimiento<br>
+              <i class="fas fa-microchip me-2"></i>Procesador avanzado<br>
+              <i class="fas fa-memory me-2"></i>Memoria optimizada<br>
+              <i class="fas fa-shield-alt me-2"></i>Garantía incluida
+            </div>
+            <div class="product-price">
+              S/ <span th:text="${#numbers.formatDecimal(producto.precio, 1, 2)}">0.00</span>
+            </div>
+            <button class="btn btn-primary btn-full">
+              <i class="fas fa-shopping-cart me-2"></i>
+              Agregar al carrito
+            </button>
+          </div>
+        </div>
+        
+        <!-- Mensaje si no hay productos -->
+        <div th:if="${#lists.isEmpty(productos)}" class="empty-state">
+          <div class="empty-icon">
+            <i class="fas fa-laptop"></i>
+          </div>
+          <h3>No hay laptops disponibles</h3>
+          <p>Estamos trabajando para traerte los mejores productos.</p>
+        </div>
+      </section>
+
+      <section class="explo aviso">
+        <div class="feature">
+          <img src="img/ensamblado.png" alt="Icono Ensamblado" />
+          <h3>Configuración profesional</h3>
+          <p>
+            Todas las laptops son configuradas y optimizadas por nuestros técnicos especializados.
+          </p>
+        </div>
+
+        <div class="feature">
+          <img src="img/garantia.png" alt="Icono Garantía" />
+          <h3>Garantía extendida</h3>
+          <p>
+            Ofrecemos garantía extendida de hasta 24 meses en todas nuestras laptops.
+          </p>
+        </div>
+
+        <div class="feature">
+          <img src="img/satisfaccion.png" alt="Icono Satisfacción" />
+          <h3>Asesoría especializada</h3>
+          <p>
+            Te ayudamos a encontrar la laptop perfecta según tus necesidades específicas.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!--PARA EL FOOTER: Derechos Copy -->
+    <footer class="bg-dark text-white text-center py-4">
+      <h6>© 2025 Tienda FourTech. Todos los derechos reservados.</h6>
+      <div class="redes">
+        <div class="social"><i class="fa-brands fa-facebook"></i></div>
+        <div class="social"><i class="fa-brands fa-instagram"></i></div>
+        <div class="social"><i class="fa-brands fa-tiktok"></i></div>
+      </div>
+    </footer>
+
+    <!-- Para enlazar el script de nuestro directorio -->
+    <script src="js/script.js"></script>
+    <!-- Íconos -->
+    <script
+      src="https://kit.fontawesome.com/1da5200486.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Para algunas funciones -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Para mensajes de alerta -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Script para ir arriba -->
+    <script>
+      $(document).ready(function () {
+        $(".ir-arriba").click(function () {
+          $("body, html").animate(
+            {
+              scrollTop: "0px",
+            },
+            300
+          );
+        });
+        $(window).scroll(function () {
+          if ($(this).scrollTop() > 0) {
+            $(".ir-arriba").slideDown(300);
+          } else {
+            $(".ir-arriba").slideUp(300);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

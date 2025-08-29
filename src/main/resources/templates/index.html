@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tienda FourTech</title>
+    <!-- Para agregar ícono del logo a la página -->
+    <link rel="icon" href="img/logo.jpeg" type="image/png" />
+    <!-- Para enlazar el estilo de nuestro directorio -->
+    
+    <!-- Link de Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+      crossorigin="anonymous"
+    />
+    <!-- Animate.css para animaciones -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <span class="ir-arriba">
+      <i class="fa-solid fa-arrow-up"></i>
+    </span>
+    
+    <header
+      class="d-flex p-2 text-center py-4 justify-content-around align-items-center"
+    >
+        <div class="logo">
+          <img src="img/logo.jpeg" alt="Logo FourTech" />
+        </div>
+        <div class="slogan">
+          <h1>Tienda Fourtech</h1>
+          <p>Tenemos lo necesario para ti.</p>
+        </div>
+        
+        <!-- Sección de autenticación -->
+        <div class="header-actions">
+          <!-- Botones cuando NO está autenticado -->
+          <div sec:authorize="!isAuthenticated()" class="auth-section">
+            <a href="/login" class="btn btn-outline-primary me-2">
+              <i class="fas fa-sign-in-alt"></i>
+              Iniciar Sesión
+            </a>
+            <a href="/registro" class="btn btn-primary">
+              <i class="fas fa-user-plus"></i>
+              Registrarse
+            </a>
+          </div>
+
+          <!-- Menú cuando SÍ está autenticado -->
+          <div sec:authorize="isAuthenticated()" class="user-section">
+            <div class="user-menu d-flex align-items-center">
+              <span class="welcome-text me-3">
+                <i class="fas fa-user-circle me-1"></i>
+                Bienvenido, <strong sec:authentication="name">Usuario</strong>
+              </span>
+              <form th:action="@{/logout}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-outline-danger">
+                  <i class="fas fa-sign-out-alt"></i>
+                  Cerrar Sesión
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+    </header>
+
+    <nav
+      class="navbar navbar-expand-lg bg-dark border-bottom border-body"
+      data-bs-theme="dark"
+    >
+      <div class="container-fluid justify-content-end">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo01"
+          aria-controls="navbarTogglerDemo01"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          class="collapse navbar-collapse justify-content-center text-center"
+          id="navbarTogglerDemo01"
+        >
+          <ul class="navbar-nav mb-2 mb-lg-0 gap-5">
+          <li class="nav-item">
+            <a href="/" class="nav-link active">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a href="/computadoras" class="nav-link">Computadoras</a>
+          </li>
+          <li class="nav-item">
+            <a href="/laptops" class="nav-link">Laptops</a>
+          </li>
+          <li class="nav-item">
+            <a href="/accesorios" class="nav-link">Accesorios</a>
+          </li>
+          <li class="nav-item">
+            <a href="/usuarios" class="nav-link">Usuarios</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="justify-content-center">
+      <section class="carrusel">
+        <div class="carrusel_imagen active">
+          <img
+            src="https://lidercomputeraqp.com.pe/wp-content/uploads/2023/10/WebBanner-Lider-Computer-Portafolio-ROG.jpg"
+            alt=""
+          />
+        </div>
+        <div class="carrusel_imagen">
+          <img
+            src="https://lidercomputeraqp.com.pe/wp-content/uploads/2021/05/lider-baner.jpg"
+            alt=""
+          />
+        </div>
+        <div class="carrusel_imagen">
+          <img
+            src="https://lidercomputeraqp.com.pe/wp-content/uploads/2021/05/BANNERS-LIDER-gamer.jpg"
+            alt=""
+          />
+        </div>
+      </section>
+
+      <section
+        class="explo container-fluid row text-center justify-content-center"
+      >
+        <h6>Categorías</h6>
+        <h2>Explore nuestra gama de productos</h2>
+
+        <div class="producto col-sm-6 col-lg-4">
+          <a href="computadoras.html">
+            <img
+              class="img-fluid mx-auto"
+              src="https://mipclista.com/img/cms/a2-3-600x400.png"
+              alt="Computadoras"
+            />
+          </a>
+        </div>
+        <div class="producto col-sm-6 col-lg-4">
+          <a href="laptops.html">
+            <img
+              class="img-fluid mx-auto"
+              src="https://mipclista.com/img/cms/a1-1-600x400.png"
+              alt="Laptops"
+            />
+          </a>
+        </div>
+        <div class="producto col-sm-6 col-lg-4">
+          <a href="accesorios.html">
+            <img
+              class="img-fluid mx-auto"
+              src="https://mipclista.com/img/cms/a6-3-600x400.png"
+              alt="Accesorios"
+            />
+          </a>
+        </div>
+      </section>
+
+      <section class="explo container-fluid row text-center justify-content-center align-items-center">
+        <h6>Ubícanos</h6>
+        <h2 class="explobajo">Revisa nuestros números de contacto</h2>
+        <div class="mapa col-sm-10 col-md-9 col-lg-6">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.312035313803!2d-77.07276692418692!3d-11.952884640161397!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105d1d877f532d7%3A0x8db19fe8e1f40feb!2sUniversidad%20Tecnol%C3%B3gica%20del%20Per%C3%BA!5e0!3m2!1ses!2spe!4v1744346976139!5m2!1ses!2spe"
+            height="600"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <div class="numeros col-sm-10 col-md-9 col-lg-6">
+                <h4>Tienda principal</h4>
+                <hr />
+                <br />
+                <h2>Pasaje, Acisclo Villarán 331 Sótano 1 "Galería la Once"</h2>
+                <br />
+                <h6>Atención al cliente de Lunes a Sábado 9am a 6pm Domingo 10am a 3pm</h6>
+                <h6>CERCADO DE LIMA, PERÚ</h6>
+
+                <div class="numero">
+                <h3>
+                    <i class="fa-brands fa-whatsapp" style="color: #13a77a"></i>
+                    987654321
+                </h3>
+                </div>
+                <div class="numero">
+                <h3>
+                    <i class="fa-brands fa-whatsapp" style="color: #13a77a"></i>
+                    945164712
+                </h3>
+                </div>
+                <div class="numero">
+                <h3>
+                    <i class="fa-brands fa-whatsapp" style="color: #13a77a"></i>
+                    912345678
+                </h3>
+                </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="explo aviso">
+        <div class="feature">
+          <img src="img/ensamblado.png" alt="Icono Ensamblado" />
+          <h3>Ensamblado por expertos</h3>
+          <p>
+            Todos los equipos son ensamblados y probados para garantizar un buen
+            rendimiento.
+          </p>
+        </div>
+
+        <div class="feature">
+          <img src="img/garantia.png" alt="Icono Garantía" />
+          <h3>12 meses de garantía</h3>
+          <p>
+            Todos los componentes tienen una garantía individual por fallas de
+            fábrica.
+          </p>
+        </div>
+
+        <div class="feature">
+          <img src="img/satisfaccion.png" alt="Icono Satisfacción" />
+          <h3>Satisfacción</h3>
+          <p>
+            Se eligió cuidadosamente cada componente para garantizar el máximo
+            rendimiento.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!--PARA EL FOOTER: Derechos Copy -->
+    <footer class="bg-dark text-white text-center py-4">
+      <h6>© 2025 Tienda FourTech. Todos los derechos reservados.</h6>
+      <div class="redes">
+        <div class="social"><i class="fa-brands fa-facebook"></i></div>
+        <div class="social"><i class="fa-brands fa-instagram"></i></div>
+        <div class="social"><i class="fa-brands fa-tiktok"></i></div>
+      </div>
+    </footer>
+
+    <!-- Para enlazar el script de nuestro directorio -->
+    <script src="js/script.js"></script>
+    <!-- Íconos -->
+    <script
+      src="https://kit.fontawesome.com/1da5200486.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Para algunas funciones -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Para mensajes de alerta -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Script para ir arriba -->
+    <script>
+      $(document).ready(function () {
+        $(".ir-arriba").click(function () {
+          $("body, html").animate(
+            {
+              scrollTop: "0px",
+            },
+            300
+          );
+        });
+        $(window).scroll(function () {
+          if ($(this).scrollTop() > 0) {
+            $(".ir-arriba").slideDown(300);
+          } else {
+            $(".ir-arriba").slideUp(300);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
+
